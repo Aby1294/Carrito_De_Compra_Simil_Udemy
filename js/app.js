@@ -5,6 +5,9 @@ const vaciarCarritoBtn = document.querySelector('#vaciar-carrito')
 const listaCursos = document.querySelector('#lista-cursos')
 let articulosCarrito = []//creo una variable con "let" xq se va ir modificando y el Array esta vacio xq se va a llenar conforme se agreguen cursos al carrito
 
+//---------------------------------------------------------------------------------------------------------------------------------//
+//---------------------------------------------------------------------------------------------------------------------------------//
+
 //recomendable tener una Funcion para cargar los eventos despues de las variables (EventListener)
 cargarEventListeners()
 function cargarEventListeners(){
@@ -13,7 +16,18 @@ function cargarEventListeners(){
 
     //Elimina cursos del carrito
     carrito.addEventListener('click', eliminarCurso)
+
+    //Vaciar el carrito de compras
+    vaciarCarritoBtn.addEventListener('click', () =>{
+        articulosCarrito = []//reseteamos el arreglo
+
+        limpiarHTML()//Eliminamos todo el HTML
+    })
 }
+
+
+//---------------------------------------------------------------------------------------------------------------------------------//
+//---------------------------------------------------------------------------------------------------------------------------------//
 
 //Funciones
 function agregarCurso(evento){//Esto significa que si preciono el boton 
@@ -30,7 +44,26 @@ function agregarCurso(evento){//Esto significa que si preciono el boton
     }
 }
 
-//Elimina un curso del carrito
+//---------------------------------------------------------------------------------------------------------------------------------//
+
+//Eliminar un curso del carrito
+function eliminarCurso(evento){
+    //Si precione el boton "borrar-curso"
+    if(evento.target.classList.contains('borrar-curso')){
+        //Creo la constante cursoId para obtener el ID de cada articulo
+        // console.log(evento.target.getAttribute('data-id')) //Ver por consola si obtengo el ID
+        const cursoId= evento.target.getAttribute('data-id')
+    //Y Elimina del arreglo de articulosCarrito por el data-id - Filter es un metodo de JS para eliminar, existen mas
+    articulosCarrito = articulosCarrito.filter(curso => curso.id !== cursoId)
+
+    carritoHTML()//Interar sobre el carrito y mostrar su HTML
+    
+    }
+
+}
+
+//---------------------------------------------------------------------------------------------------------------------------------//
+
 
 //Funcion que lee el conetido del HTML al que le dimos click y extrae la informacion del curso
 function leerDatosCurso(cursoSeleccionado){//puedo colocar "cursoSeleccionado" o cualquer nombre, siempre y cuando sepa a que onjeto se esta llamando
@@ -68,6 +101,10 @@ function leerDatosCurso(cursoSeleccionado){//puedo colocar "cursoSeleccionado" o
     carritoHTML()
 
 }
+
+
+//---------------------------------------------------------------------------------------------------------------------------------//
+
 
 //apependChild El nuevo nodo se incluye inmediatamente después de los hijos ya existentes —si hay alguno— y el nodo padre cuenta con una nueva rama.
 
@@ -112,6 +149,10 @@ function carritoHTML(){
 
     
 }
+
+
+//---------------------------------------------------------------------------------------------------------------------------------//
+
 
 function limpiarHTML(){
     //Forma lenta
